@@ -15,7 +15,7 @@ ANNOTATION_ENDPOINT = "human_ppi"
 # This is the name of the environment variable to load for testing
 HOST_ENVAR_NAME = ""
 # This is the URL of the production server, if the above envar can't be loaded, nosetest defaults to this
-NOSETEST_DEFAULT_URL = "http://{% base_url %}"
+NOSETEST_DEFAULT_URL = "http://localhost:8001/"
 
 ###################################################################################
 # Nosetests used in tests.py, fill these in with IDs/queries.
@@ -85,3 +85,9 @@ TEST_FIELDS_GET_FIELDS_ENDPOINT = []
 # Any additional fields added for check_fields subset test
 CHECK_FIELDS_SUBSET_ADDITIONAL_FIELDS = []
 
+# This is a list of IDs (& options) to test a GET to the annotation endpoint
+ANNOTATION_GET_IDS = []
+ANNOTATION_GET_JSONLD = []
+ANNOTATION_GET_MSGPACK = []
+ANNOTATION_GET_FIELDS = []
+ANNOTATION_GET_FILTER = []

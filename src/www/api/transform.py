@@ -17,59 +17,63 @@ class ESResultTransformer(ESResultTransformer):
     # *****************************************************************************
     # Safe parse for interaction_confidence
     # *****************************************************************************
-    def parse_confidence(self, res, i, hit):
-        if self.PpiFields.CONF in hit['_source']:
-            val = hit['_source'][self.PpiFields.CONF]
+    @staticmethod
+    def parse_confidence(res, i, hit):
+        if ESResultTransformer.PpiFields.CONF in hit['_source']:
+            val = hit['_source'][ESResultTransformer.PpiFields.CONF]
             val = None if (val == "NA" or val == '') else float(val)
-            res['hits']['hits'][i]['_source'][self.PpiFields.CONF] = val
+            res['hits']['hits'][i]['_source'][ESResultTransformer.PpiFields.CONF] = val
         else:
             logging.warning("Field interaction_confidence not returned for this entry.".format(hit['_source']))
-            res['hits']['hits'][i]['_source'][self.PpiFields.CONF] = None
+            res['hits']['hits'][i]['_source'][ESResultTransformer.PpiFields.CONF] = None
         return res
 
     # *****************************************************************************
     # Safe parse for interaction_participants
     # *****************************************************************************
-    def parse_participants(self, res, i, hit):
+    @staticmethod
+    def parse_participants(res, i, hit):
         # participants - list of strings
-        if self.PpiFields.PART in hit['_source']:
-            val = hit['_source'][self.PpiFields.PART].replace("_HUMAN", "")
-            res['hits']['hits'][i]['_source'][self.PpiFields.PART] = [val] if ',' not in val else val.split(',')
+        if ESResultTransformer.PpiFields.PART in hit['_source']:
+            val = hit['_source'][ESResultTransformer.PpiFields.PART].replace("_HUMAN", "")
+            res['hits']['hits'][i]['_source'][ESResultTransformer.PpiFields.PART] = [val] if ',' not in val else val.split(',')
         else:
             logging.warning("Field interaction_participants not returned for this entry - {}".format(hit['_source']))
-            res['hits']['hits'][i]['_source'][self.PpiFields.PART] = []
+            res['hits']['hits'][i]['_source'][ESResultTransformer.PpiFields.PART] = []
         return res
 
     # *****************************************************************************
     # Safe parse for interaction_publications
     # *****************************************************************************
-    def parse_publications(self, res, i, hit):
+    @staticmethod
+    def parse_publications(res, i, hit):
         # publications - list of integers
-        if self.PpiFields.PUBS in hit['_source']:
-            val = hit['_source'][self.PpiFields.PUBS]
+        if ESResultTransformer.PpiFields.PUBS in hit['_source']:
+            val = hit['_source'][ESResultTransformer.PpiFields.PUBS]
             pubs_strs = [val] if ',' not in val else val.split(',')
             try:
                 pubs_ints = list(map(int, pubs_strs))
             except ValueError:
                 pubs_ints = []
                 logging.warning("Publication Entry for this query is not valid - {}".format(pubs_strs))
-            res['hits']['hits'][i]['_source'][self.PpiFields.PUBS] = pubs_ints
+            res['hits']['hits'][i]['_source'][ESResultTransformer.PpiFields.PUBS] = pubs_ints
         else:
             logging.warning("Field interaction_publications not returned for this entry - {}".format(hit['_source']))
-            res['hits']['hits'][i]['_source'][self.PpiFields.PUBS] = []
+            res['hits']['hits'][i]['_source'][ESResultTransformer.PpiFields.PUBS] = []
         return res
 
     # *****************************************************************************
     # Safe parse for source_databases
     # *****************************************************************************
-    def parse_databases(self, res, i, hit):
+    @staticmethod
+    def parse_databases(res, i, hit):
         # databases - list of strings
-        if self.PpiFields.DBS in hit['_source']:
-            val = hit['_source'][self.PpiFields.DBS]
-            res['hits']['hits'][i]['_source'][self.PpiFields.DBS] = [val] if ',' not in val else val.split(',')
+        if ESResultTransformer.PpiFields.DBS in hit['_source']:
+            val = hit['_source'][ESResultTransformer.PpiFields.DBS]
+            res['hits']['hits'][i]['_source'][ESResultTransformer.PpiFields.DBS] = [val] if ',' not in val else val.split(',')
         else:
             logging.warning("Field source_databases not returned for this entry - {}".format(hit['_source']))
-            res['hits']['hits'][i]['_source'][self.PpiFields.DBS] = []
+            res['hits']['hits'][i]['_source'][ESResultTransformer.PpiFields.DBS] = []
         return res
 
     # #############################################################################

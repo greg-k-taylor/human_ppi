@@ -4,13 +4,16 @@ import os
 # Add this directory to python path (contains nosetest_config)
 sys.path.append(os.path.dirname(os.path.realpath(__file__)))
 
-from biothings.tests import BiothingTest
-from biothings.tests.settings import NosetestSettings
+from biothings.tests.tests import BiothingTests
+from biothings.tests.settings import BiothingTestSettings
 
-ns = NosetestSettings()
+ns = BiothingTestSettings()
 
-class {% nosetest_settings_class %}(BiothingTest):
-    __test__ = True
-
-    # Add extra nosetests here
-    pass
+# *****************************************************************************
+#  TODO:  Fix the BiothingTests
+# *****************************************************************************
+# class HumanPPITests(BiothingTests):
+#     __test__ = True
+#
+#     # Add extra nosetests here
+#     pass
